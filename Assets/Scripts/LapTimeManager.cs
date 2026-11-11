@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using TMPro;
 
@@ -8,6 +9,10 @@ public class LapTimeManager : MonoBehaviour
     public static float MilliCount;
     public static string MilliDisplay;
 
+    [Header("Timer Delay")]
+    public float countdownDelay = 3f;
+    public bool canCount = false;
+
     [Header("UI Text References")]
     public TMP_Text MinuteBox;
     public TMP_Text SecondBox;
@@ -15,14 +20,30 @@ public class LapTimeManager : MonoBehaviour
 
     void Start()
     {
-        // Reset timer when the scene or race starts
+        // Reset timer values
         MinuteCount = 0;
         SecondCount = 0;
         MilliCount = 0f;
+
+        // Display initial 00:00.0 on UI
+        UpdateTimerDisplay();
+
+        // Start delay coroutine
+        StartCoroutine(StartTimerAfterDelay());
+    }
+
+    IEnumerator StartTimerAfterDelay()
+    {
+        canCount = false;
+        yield return new WaitForSeconds(countdownDelay);
+        canCount = true;
     }
 
     void Update()
     {
+        // Block counting until the 3-second delay has passed
+        if (!canCount) return;
+
         MilliCount += Time.deltaTime * 10f;
 
         if (MilliCount >= 10f)
@@ -37,25 +58,25 @@ public class LapTimeManager : MonoBehaviour
             MinuteCount += 1;
         }
 
-        MilliDisplay = Mathf.FloorToInt(MilliCount).ToString();
-        MilliBox.text = MilliDisplay;
+        UpdateTimerDisplay();
+    }
 
-        if (SecondCount <= 9)
+    void UpdateTimerDisplay()
+    {
+        if (MilliBox != null)
         {
-            SecondBox.text = "0" + SecondCount + ".";
-        }
-        else
-        {
-            SecondBox.text = SecondCount + ".";
+            MilliDisplay = Mathf.FloorToInt(MilliCount).ToString();
+            MilliBox.text = MilliDisplay;
         }
 
-        if (MinuteCount <= 9)
+        if (SecondBox != null)
         {
-            MinuteBox.text = "0" + MinuteCount + ":";
+            SecondBox.text = (SecondCount <= 9 ? "0" : "") + SecondCount + ".";
         }
-        else
+
+        if (MinuteBox != null)
         {
-            MinuteBox.text = MinuteCount + ":";
+            MinuteBox.text = (MinuteCount <= 9 ? "0" : "") + MinuteCount + ":";
         }
     }
 }
