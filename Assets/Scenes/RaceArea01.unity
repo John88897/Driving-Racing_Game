@@ -484,7 +484,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.07552053, y: 0.0040626815, z: -0.0003077163, w: 0.997136}
-  m_LocalPosition: {x: 0.01, y: 2.37, z: -1.23}
+  m_LocalPosition: {x: -0.08, y: 2.87, z: -4.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -786,6 +786,8 @@ GameObject:
   - component: {fileID: 434821238}
   - component: {fileID: 434821237}
   - component: {fileID: 434821236}
+  - component: {fileID: 434821240}
+  - component: {fileID: 434821239}
   m_Layer: 5
   m_Name: CountDownUI
   m_TagString: Untagged
@@ -809,7 +811,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -40}
+  m_AnchoredPosition: {x: 202, y: -50}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &434821236
@@ -920,7 +922,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -5.376251, y: -40.119522, z: 229.00818, w: 40.15956}
+  m_margin: {x: -155.00809, y: -40.119522, z: 177.05576, w: 25.362427}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -934,6 +936,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 434821234}
   m_CullTransparentMesh: 1
+--- !u!114 &434821239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434821234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e4807b629a15c04da6e6948848a4c9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CountdownManager
+  countdownText: {fileID: 434821237}
+  animator: {fileID: 434821236}
+--- !u!225 &434821240
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434821234}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &587594083
 GameObject:
   m_ObjectHideFlags: 0
@@ -1132,7 +1160,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 136.85645, y: 14.672943, z: 38.00049, w: 5.43927}
+  m_margin: {x: 136.85645, y: 14.672943, z: 14.09906, w: 5.43927}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1992,7 +2020,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2058534148148648925, guid: d84787863a48b884e8c303159510c801, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 483.85
+      value: 483.7
       objectReference: {fileID: 0}
     - target: {fileID: 2058534148148648925, guid: d84787863a48b884e8c303159510c801, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2000,7 +2028,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2058534148148648925, guid: d84787863a48b884e8c303159510c801, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 518.47
+      value: 519.53
       objectReference: {fileID: 0}
     - target: {fileID: 2058534148148648925, guid: d84787863a48b884e8c303159510c801, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2631,6 +2659,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0586a1ba5f911341b43ff45957b7c92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LapTimeManager
+  countdownDelay: 3
+  canCount: 0
   MinuteBox: {fileID: 664136951}
   SecondBox: {fileID: 720900397}
   MilliBox: {fileID: 653870354}
@@ -3026,7 +3056,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 136.1463, y: 14.672943, z: 38.00049, w: 5.43927}
+  m_margin: {x: 136.1463, y: 14.672943, z: 18.962036, w: 5.43927}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3325,6 +3355,8 @@ MonoBehaviour:
   maxSpeed: 70
   turnSpeed: 120
   reverseSpeed: 25
+  countdownDelay: 3
+  canControl: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
