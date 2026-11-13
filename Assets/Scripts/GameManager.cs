@@ -10,7 +10,9 @@ public class GameManager : MonoBehaviour
     [Header("UI (drag from Canvas)")]
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI statusText;
-    public GameObject restartButton;   // optional: hidden until game over
+    public GameObject restartButton;   // hidden until the game ends
+
+    [HideInInspector] public bool halfwayPassed;
 
     float timeLeft;
     bool gameOver;
@@ -20,9 +22,10 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         timeLeft = timeLimit;
         gameOver = false;
+        halfwayPassed = false;
 
         if (statusText != null)
-            statusText.text = "Finish one lap before time runs out and avoid the police!";
+            statusText.text = "Finish one lap in time and avoid the police!";
         if (restartButton != null)
             restartButton.SetActive(false);
     }
@@ -37,6 +40,30 @@ public class GameManager : MonoBehaviour
 
         if (timeLeft <= 0f)
             Lose("TIME'S UP! You lose.");
+    }
+
+    // Called by LapTrigger on the halfway checkpoint
+    public void ReachCheckpoint()
+    {
+        if (gameOver || halfwayPassed) return;
+        halfwayPassed = true;
+        if (statusText != null)
+            statusText.text = "Checkpoint reached! Head back to the finish line.";
+    }
+
+    // Called by LapTrigger on the finish line
+    public void ReachFinish()
+    {
+        if (gameOver) return;
+
+        if (!halfwayPassed)
+        {
+            if (statusText != null)
+                statusText.text = "Pass the halfway checkpoint first!";
+            return;
+        }
+
+        Win();
     }
 
     public void Win()
