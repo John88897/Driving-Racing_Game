@@ -1874,7 +1874,6 @@ MonoBehaviour:
   turnSpeed: 2
   startDelay: 3
   extraGravity: 30
-  stuckTime: 2
 --- !u!54 &770103896
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3495,7 +3494,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 64
+  m_Constraints: 80
   m_CollisionDetection: 2
 --- !u!114 &2087929452
 MonoBehaviour:
