@@ -10,7 +10,14 @@ public class GameManager : MonoBehaviour
     [Header("UI (drag from Canvas)")]
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI statusText;
-    public GameObject restartButton;   // hidden until the game ends
+    public GameObject restartButton;
+
+    [Header("Status Colors")]
+    public Color infoColor       = Color.white;                       // start instructions
+    public Color checkpointColor = new Color(1f, 0.85f, 0.2f);        // yellow
+    public Color warningColor    = new Color(1f, 0.55f, 0f);          // orange
+    public Color winColor        = new Color(0.2f, 1f, 0.3f);         // green
+    public Color loseColor       = new Color(1f, 0.25f, 0.25f);       // red
 
     [HideInInspector] public bool halfwayPassed;
 
@@ -24,10 +31,8 @@ public class GameManager : MonoBehaviour
         gameOver = false;
         halfwayPassed = false;
 
-        if (statusText != null)
-            statusText.text = "Finish one lap in time and avoid the police!";
-        if (restartButton != null)
-            restartButton.SetActive(false);
+        ShowStatus("Finish one lap in time and avoid the police!", infoColor);
+        if (restartButton != null) restartButton.SetActive(false);
     }
 
     void Update()
@@ -35,31 +40,40 @@ public class GameManager : MonoBehaviour
         if (gameOver) return;
 
         timeLeft -= Time.deltaTime;
+
         if (timerText != null)
+        {
             timerText.text = "Time: " + Mathf.CeilToInt(timeLeft);
+            // timer turns red in the last 10 seconds
+            timerText.color = timeLeft <= 10f ? loseColor : Color.white;
+        }
 
         if (timeLeft <= 0f)
             Lose("TIME'S UP! You lose.");
     }
 
-    // Called by LapTrigger on the halfway checkpoint
+    // Sets the status message and its colour together
+    void ShowStatus(string message, Color color)
+    {
+        if (statusText == null) return;
+        statusText.text = message;
+        statusText.color = color;
+    }
+
     public void ReachCheckpoint()
     {
         if (gameOver || halfwayPassed) return;
         halfwayPassed = true;
-        if (statusText != null)
-            statusText.text = "Checkpoint reached! Head back to the finish line.";
+        ShowStatus("Checkpoint reached! Head to the finish line.", checkpointColor);
     }
 
-    // Called by LapTrigger on the finish line
     public void ReachFinish()
     {
         if (gameOver) return;
 
         if (!halfwayPassed)
         {
-            if (statusText != null)
-                statusText.text = "Pass the halfway checkpoint first!";
+            ShowStatus("Pass the halfway checkpoint first!", warningColor);
             return;
         }
 
@@ -69,24 +83,23 @@ public class GameManager : MonoBehaviour
     public void Win()
     {
         if (gameOver) return;
-        EndGame("YOU WIN! Time left: " + Mathf.CeilToInt(timeLeft));
+        EndGame("CONGRATULATIONS! \n Time left: " + Mathf.CeilToInt(timeLeft), winColor);
     }
 
     public void Lose(string message = "TIME'S UP! You lose.")
     {
         if (gameOver) return;
-        EndGame(message);
+        EndGame(message, loseColor);
     }
 
-    void EndGame(string message)
+    void EndGame(string message, Color color)
     {
         gameOver = true;
-        if (statusText != null) statusText.text = message;
+        ShowStatus(message, color);
         if (restartButton != null) restartButton.SetActive(true);
-        Time.timeScale = 0f;   // freezes the game
+        Time.timeScale = 0f;
     }
 
-    // Hook this to the Restart button's OnClick
     public void Restart()
     {
         Time.timeScale = 1f;
