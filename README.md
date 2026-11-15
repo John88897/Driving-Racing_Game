@@ -172,10 +172,10 @@ Jimmy Vegas,
 ### Assets
 | Asset | Creator | Source |
 |---|---|---|
-| Player car `N_Muscle Car_10` and police car `Police Car N_4` | [creator] | [Asset Store / website link] |
-| Terrain textures: *Realistic Terrain Textures* | [creator] | [link] |
-| Environment / trees: [exact pack names from your Project folders, e.g. *Mobile Optimized, Free L...*, *CartoonTra...*] | [creator] | [link] |
-| [Sound / music, if any] |mixkit.co|
+| Player car `N_Muscle Car_10` and police car `Police Car N_4` | RCC Design | [Cartoon Race Track - Oval](https://assetstore.unity.com/packages/3d/environments/roadways/cartoon-race-track-oval-175061) |
+| Terrain textures: *Realistic Terrain Textures* | Objective Environment | [Realistic Terrain Textures FREE](https://assetstore.unity.com/packages/2d/textures-materials/floors/realistic-terrain-textures-free-279940) |
+| Environment / tree | RCC design |  [Cartoon Race Track - Oval](https://assetstore.unity.com/packages/3d/environments/roadways/cartoon-race-track-oval-175061) |
+| Realistic Car sound|Skril Studio|[Rotary x8 - Free Engine Sound Pack](https://assetstore.unity.com/packages/audio/sound-fx/transportation/rotary-x8-free-engine-sound-pack-106119) |
 
 > Open each pack's folder in the Unity Project window and check its readme or Asset Store page to get the exact name, creator and link.
 
