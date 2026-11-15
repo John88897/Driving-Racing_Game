@@ -13,11 +13,16 @@ public class GameManager : MonoBehaviour
     public GameObject restartButton;
 
     [Header("Status Colors")]
-    public Color infoColor       = Color.white;                       // start instructions
-    public Color checkpointColor = new Color(1f, 0.85f, 0.2f);        // yellow
-    public Color warningColor    = new Color(1f, 0.55f, 0f);          // orange
-    public Color winColor        = new Color(0.2f, 1f, 0.3f);         // green
-    public Color loseColor       = new Color(1f, 0.25f, 0.25f);       // red
+    public Color infoColor       = Color.white;
+    public Color checkpointColor = new Color(1f, 0.85f, 0.2f);   // yellow
+    public Color warningColor    = new Color(1f, 0.55f, 0f);     // orange
+    public Color winColor        = new Color(0.2f, 1f, 0.3f);    // green
+    public Color loseColor       = new Color(1f, 0.25f, 0.25f);  // red
+
+    [Header("Sounds")]
+    public AudioSource sfx;      // Audio Source on this object
+    public AudioClip winClip;
+    public AudioClip loseClip;
 
     [HideInInspector] public bool halfwayPassed;
 
@@ -27,6 +32,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1f;
+        AudioListener.pause = false;
+        if (sfx != null) sfx.ignoreListenerPause = true;
+
         timeLeft = timeLimit;
         gameOver = false;
         halfwayPassed = false;
@@ -44,7 +52,6 @@ public class GameManager : MonoBehaviour
         if (timerText != null)
         {
             timerText.text = "Time: " + Mathf.CeilToInt(timeLeft);
-            // timer turns red in the last 10 seconds
             timerText.color = timeLeft <= 10f ? loseColor : Color.white;
         }
 
@@ -52,7 +59,6 @@ public class GameManager : MonoBehaviour
             Lose("TIME'S UP! You lose.");
     }
 
-    // Sets the status message and its colour together
     void ShowStatus(string message, Color color)
     {
         if (statusText == null) return;
@@ -83,12 +89,14 @@ public class GameManager : MonoBehaviour
     public void Win()
     {
         if (gameOver) return;
-        EndGame("CONGRATULATIONS! \n Time left: " + Mathf.CeilToInt(timeLeft), winColor);
+        if (sfx != null && winClip != null) sfx.PlayOneShot(winClip);
+        EndGame("CONGRATULATIONS!\nTime left: " + Mathf.CeilToInt(timeLeft), winColor);
     }
 
     public void Lose(string message = "TIME'S UP! You lose.")
     {
         if (gameOver) return;
+        if (sfx != null && loseClip != null) sfx.PlayOneShot(loseClip);
         EndGame(message, loseColor);
     }
 
@@ -98,11 +106,13 @@ public class GameManager : MonoBehaviour
         ShowStatus(message, color);
         if (restartButton != null) restartButton.SetActive(true);
         Time.timeScale = 0f;
+        AudioListener.pause = true;
     }
 
     public void Restart()
     {
         Time.timeScale = 1f;
+        AudioListener.pause = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
