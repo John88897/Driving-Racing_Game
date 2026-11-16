@@ -198,7 +198,6 @@ In line with the course's academic integrity rules, we declare the following use
 - The police car chases in a straight line toward the player and has no pathfinding, so it can get stuck on trees or steep slopes. It frees itself after a short time.
 - Only one level and one scene (as allowed by the brief).
 - Keyboard controls only.
-- [Add any other bugs or limits you know about.]
 
 ##  Project Structure
 
